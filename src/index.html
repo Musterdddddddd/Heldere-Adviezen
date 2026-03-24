@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helder Advies — Energiebesparing</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --groen-donker: #1b5e20;
+  --groen-mid:    #2e7d32;
+  --groen-helder: #43a047;
+  --groen-licht:  #a5d6a7;
+  --goud:         #f9a825;
+  --goud-licht:   #ffd54f;
+  --achtergrond:  #f1f8e9;
+  --tekst:        #1a2e1a;
+  --tekst-mid:    #4a6349;
+  --tekst-licht:  #7a9a79;
+  --schaduw:      rgba(27,94,32,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Nunito',sans-serif; background:var(--achtergrond); color:var(--tekst); overflow-x:hidden; }
+ 
+nav { position:fixed; top:0; left:0; right:0; z-index:999; display:flex; align-items:center; justify-content:space-between; padding:0.9rem 5vw; transition:all 0.3s; }
+nav.vast { background:rgba(255,255,255,0.97); box-shadow:0 2px 20px var(--schaduw); }
+.nav-logo { display:flex; align-items:center; gap:0.7rem; text-decoration:none; }
+.nav-naam { font-weight:900; font-size:1.15rem; color:var(--groen-donker); }
+.nav-naam span { color:var(--goud); }
+.nav-links { display:flex; gap:1.6rem; list-style:none; }
+.nav-links a { color:var(--groen-mid); text-decoration:none; font-weight:700; font-size:0.82rem; transition:color 0.2s; cursor:pointer; }
+.nav-links a:hover { color:var(--goud); }
+ 
+.hero { min-height:100vh; background:linear-gradient(160deg,var(--groen-donker) 0%,var(--groen-mid) 60%,#388e3c 100%); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:6rem 8vw 4rem; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-120px; right:-80px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle,rgba(249,168,37,0.18) 0%,transparent 70%); }
+.hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:80px; background:var(--achtergrond); clip-path:ellipse(55% 100% at 50% 100%); }
+.hero-tag { background:rgba(249,168,37,0.2); border:1px solid rgba(249,168,37,0.4); color:var(--goud-licht); font-size:0.75rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; padding:0.4rem 1rem; border-radius:50px; margin-bottom:1.5rem; animation:fadeUp 0.7s ease 0.2s both; }
+.hero h1 { font-family:'Lora',serif; font-size:clamp(2.4rem,6vw,5.5rem); font-weight:700; line-height:1.1; color:white; margin-bottom:1.2rem; animation:fadeUp 0.7s ease 0.4s both; }
+.hero h1 em { color:var(--goud); font-style:italic; }
+.hero-sub { font-size:1.05rem; color:rgba(255,255,255,0.72); max-width:480px; line-height:1.75; margin-bottom:2.5rem; animation:fadeUp 0.7s ease 0.6s both; }
+.hero-logo-groot { display:flex; align-items:center; gap:1.2rem; margin-bottom:2.5rem; animation:fadeUp 0.7s ease 0.3s both; }
+ 
+.knop { display:inline-block; background:var(--goud); color:var(--groen-donker); padding:0.95rem 2.2rem; border-radius:50px; font-weight:800; font-size:0.95rem; text-decoration:none; border:none; cursor:pointer; font-family:'Nunito',sans-serif; transition:all 0.25s; }
+.knop:hover { background:var(--goud-licht); transform:translateY(-2px); box-shadow:0 10px 25px rgba(249,168,37,0.4); }
+.knop-groen { background:var(--groen-mid); color:white; }
+.knop-groen:hover { background:var(--groen-donker); box-shadow:0 10px 25px rgba(27,94,32,0.3); transform:translateY(-2px); }
+.knop-licht { background:var(--achtergrond); color:var(--groen-mid); border:2px solid var(--groen-licht); }
+.knop-licht:hover { background:var(--groen-licht); box-shadow:none; transform:translateY(-1px); }
+ 
+.stappen-nav { display:flex; justify-content:center; background:white; box-shadow:0 2px 12px var(--schaduw); position:sticky; top:0; z-index:100; overflow-x:auto; }
+.stap-tab { flex:1; max-width:200px; min-width:90px; padding:0.9rem 0.8rem; text-align:center; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.25s; font-weight:700; font-size:0.8rem; color:var(--tekst-licht); white-space:nowrap; }
+.stap-tab.actief { border-bottom-color:var(--goud); color:var(--groen-donker); background:var(--achtergrond); }
+.stap-nr { display:inline-flex; width:20px; height:20px; border-radius:50%; background:var(--groen-licht); color:var(--groen-donker); font-weight:900; font-size:0.7rem; align-items:center; justify-content:center; margin-right:0.35rem; }
+.stap-tab.actief .stap-nr { background:var(--goud); }
+ 
+.sectie { padding:5rem 8vw; }
+.sectie-tag { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--groen-helder); font-weight:700; margin-bottom:0.75rem; }
+.sectie-titel { font-family:'Lora',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; color:var(--groen-donker); line-height:1.2; margin-bottom:1rem; }
+.sectie-titel em { color:var(--groen-helder); font-style:italic; }
+.sectie-sub { color:var(--tekst-mid); font-size:1rem; line-height:1.75; max-width:580px; margin-bottom:2.5rem; }
+ 
+#stap-woning { background:white; }
+.woning-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.9rem; }
+.woning-kaart { border:2px solid #e8f5e9; border-radius:16px; padding:1.25rem 0.9rem; text-align:center; cursor:pointer; transition:all 0.2s; background:var(--achtergrond); }
+.woning-kaart:hover { border-color:var(--groen-helder); background:white; }
+.woning-kaart.gekozen { border-color:var(--goud); background:#fffde7; box-shadow:0 4px 16px rgba(249,168,37,0.2); }
+.woning-icon { font-size:2rem; margin-bottom:0.5rem; display:block; }
+.woning-naam { font-weight:800; font-size:0.85rem; color:var(--groen-donker); }
+.woning-sub { font-size:0.73rem; color:var(--tekst-licht); margin-top:0.2rem; }
+.bouwjaar-rij { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:0.8rem; }
+.bj-knop { padding:0.45rem 1.1rem; border-radius:50px; border:2px solid #c8e6c9; background:white; font-family:'Nunito',sans-serif; font-weight:700; font-size:0.82rem; color:var(--groen-mid); cursor:pointer; transition:all 0.2s; }
+.bj-knop:hover { border-color:var(--groen-helder); }
+.bj-knop.gekozen { background:var(--groen-mid); border-color:var(--groen-mid); color:white; }
+.bewoners-rij { display:flex; align-items:center; gap:1rem; margin-top:1.5rem; }
+.bewoners-rij label { font-weight:700; color:var(--tekst-mid); font-size:0.9rem; }
+.teller-knop { width:34px; height:34px; border-radius:50%; border:2px solid var(--groen-licht); background:white; font-size:1.1rem; cursor:pointer; font-weight:700; color:var(--groen-mid); display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+.teller-knop:hover { background:var(--groen-mid); color:white; border-color:var(--groen-mid); }
+#bewoners-display { font-size:1.4rem; font-weight:900; color:var(--groen-donker); min-width:2rem; text-align:center; }
+.veld-label { font-weight:800; font-size:0.85rem; color:var(--groen-donker); margin:2rem 0 0.75rem; }
+.doorgaan-rij { margin-top:2.5rem; display:flex; justify-content:flex-end; }
+ 
+#stap-checklist { background:var(--achtergrond); display:none; }
+.categorie-blok { margin-bottom:2.5rem; }
+.categorie-titel { font-weight:900; font-size:0.77rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--groen-mid); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:2px solid #c8e6c9; }
+.check-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(285px,1fr)); gap:0.55rem; }
+.check-item { display:flex; align-items:flex-start; gap:0.85rem; background:white; border:1.5px solid transparent; border-radius:12px; padding:0.8rem 1rem; cursor:pointer; transition:all 0.18s; user-select:none; }
+.check-item:hover { border-color:var(--groen-licht); }
+.check-item.ja { background:#e8f5e9; border-color:var(--groen-helder); }
+.check-item.nee { background:#fff8e1; border-color:#ffe082; }
+.check-vak { width:21px; height:21px; border-radius:6px; flex-shrink:0; margin-top:1px; border:2px solid #ccc; display:flex; align-items:center; justify-content:center; font-size:0.78rem; color:white; transition:all 0.18s; background:white; }
+.check-item.ja .check-vak { background:var(--groen-helder); border-color:var(--groen-helder); }
+.check-item.nee .check-vak { background:#ffa000; border-color:#ffa000; }
+.check-tekst { font-size:0.87rem; line-height:1.45; color:var(--tekst-mid); font-weight:600; }
+.check-item.ja .check-tekst { color:var(--groen-donker); }
+.check-item.nee .check-tekst { color:#7a5a00; }
+.check-hint { font-size:0.71rem; color:var(--tekst-licht); margin-top:0.2rem; font-weight:400; }
+.check-legenda { display:flex; gap:1.25rem; margin-bottom:1.25rem; align-items:center; font-size:0.8rem; color:var(--tekst-mid); flex-wrap:wrap; }
+.legenda-item { display:flex; align-items:center; gap:0.45rem; font-weight:700; }
+.legenda-kleur { width:13px; height:13px; border-radius:4px; }
+.voortgang-wrap { margin:1.25rem 0; }
+.voortgang-label { font-size:0.82rem; color:var(--tekst-mid); font-weight:700; margin-bottom:0.4rem; }
+.voortgang-balk { background:#e0e0e0; border-radius:50px; height:7px; overflow:hidden; }
+.voortgang-vul { height:100%; background:linear-gradient(90deg,var(--groen-helder),var(--goud)); border-radius:50px; transition:width 0.4s; width:0%; }
+ 
+#stap-resultaat { background:white; display:none; }
+.resultaat-top { background:linear-gradient(135deg,var(--groen-donker),var(--groen-mid)); border-radius:24px; padding:3rem; color:white; text-align:center; margin-bottom:2.5rem; position:relative; overflow:hidden; }
+.resultaat-top::before { content:'💡'; font-size:8rem; position:absolute; right:-1rem; top:-1rem; opacity:0.08; }
+.bespaar-bedrag { font-family:'Lora',serif; font-size:4.5rem; font-weight:700; color:var(--goud-licht); line-height:1; }
+.bespaar-label { color:rgba(255,255,255,0.7); font-size:1rem; margin-top:0.5rem; }
+.bespaar-sub { font-size:0.85rem; color:rgba(255,255,255,0.5); margin-top:0.5rem; }
+.tips-resultaat { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; }
+.tip-res { border-radius:16px; border:1px solid #e8f5e9; padding:1.25rem 1.5rem; background:var(--achtergrond); transition:box-shadow 0.2s; }
+.tip-res:hover { box-shadow:0 6px 20px var(--schaduw); }
+.tip-res-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.6rem; gap:0.5rem; }
+.tip-res-naam { font-weight:800; font-size:0.88rem; color:var(--groen-donker); }
+.tip-res-bedrag { background:var(--goud); color:var(--groen-donker); font-weight:900; font-size:0.74rem; padding:0.22rem 0.7rem; border-radius:50px; white-space:nowrap; flex-shrink:0; }
+.tip-res-uitleg { font-size:0.82rem; color:var(--tekst-mid); line-height:1.55; }
+.positief-blok { background:#e8f5e9; border-radius:16px; padding:1.5rem; margin-top:2rem; border:1px solid #c8e6c9; }
+.positief-blok h3 { color:var(--groen-donker); font-weight:900; margin-bottom:0.75rem; }
+.positief-lijst { list-style:none; display:flex; flex-wrap:wrap; gap:0.55rem; }
+.positief-lijst li { background:white; border:1px solid var(--groen-licht); color:var(--groen-mid); font-weight:700; font-size:0.78rem; padding:0.28rem 0.8rem; border-radius:50px; }
+ 
+#stap-zon { background:var(--achtergrond); display:none; }
+.zon-banner { background:linear-gradient(135deg,#bf360c,#e64a19); border-radius:16px; padding:1.5rem 2rem; margin-bottom:2rem; color:white; }
+.zon-banner h3 { font-family:'Lora',serif; font-size:1.15rem; margin-bottom:0.5rem; }
+.zon-banner p { font-size:0.87rem; line-height:1.6; opacity:0.92; }
+.zon-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }
+.zon-form { background:white; border-radius:20px; padding:2rem; box-shadow:0 4px 20px var(--schaduw); }
+.zon-form h3 { font-family:'Lora',serif; font-size:1.2rem; color:var(--groen-donker); margin-bottom:1.5rem; }
+.zon-veld { margin-bottom:1.2rem; }
+.zon-veld label { display:block; font-weight:700; font-size:0.82rem; color:var(--tekst-mid); margin-bottom:0.4rem; }
+.zon-veld input, .zon-veld select { width:100%; padding:0.75rem 1rem; border:2px solid #e8f5e9; border-radius:10px; font-family:'Nunito',sans-serif; font-size:0.95rem; color:var(--tekst); outline:none; transition:border-color 0.2s; background:var(--achtergrond); }
+.zon-veld input:focus, .zon-veld select:focus { border-color:var(--groen-helder); background:white; }
+.zon-hint { font-size:0.71rem; color:var(--tekst-licht); margin-top:0.28rem; }
+.zon-resultaat { background:white; border-radius:20px; padding:2rem; box-shadow:0 4px 20px var(--schaduw); }
+.zon-resultaat h3 { font-family:'Lora',serif; font-size:1.2rem; color:var(--groen-donker); margin-bottom:1.25rem; }
+.zon-getal-groot { font-family:'Lora',serif; font-size:3rem; font-weight:700; color:var(--groen-donker); line-height:1; }
+.zon-getal-sub { font-size:0.8rem; color:var(--tekst-licht); margin-bottom:1.25rem; margin-top:0.2rem; }
+.zon-rij { display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0; border-bottom:1px solid #e8f5e9; font-size:0.87rem; }
+.zon-rij:last-child { border-bottom:none; }
+.zon-rij-naam { color:var(--tekst-mid); font-weight:600; }
+.zon-rij-waarde { font-weight:800; color:var(--groen-donker); }
+.zon-terugverdien { background:linear-gradient(135deg,var(--groen-donker),var(--groen-mid)); color:white; border-radius:12px; padding:1.25rem; margin-top:1rem; text-align:center; }
+.zon-terugverdien .tv-getal { font-family:'Lora',serif; font-size:2.4rem; color:var(--goud-licht); font-weight:700; }
+.zon-terugverdien .tv-label { font-size:0.8rem; opacity:0.7; }
+.zon-advies { background:#fff8e1; border:1px solid #ffe082; border-radius:12px; padding:1rem 1.25rem; margin-top:1rem; font-size:0.83rem; color:#7a5a00; line-height:1.65; }
+.zon-noot { margin-top:1rem; font-size:0.72rem; color:var(--tekst-licht); line-height:1.6; }
+ 
+#contact { background:var(--groen-donker); padding:5rem 8vw; }
+.contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; }
+.contact-box { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); border-radius:20px; padding:2rem; }
+.contact-rij { display:flex; align-items:center; gap:1rem; padding:1rem 0; border-bottom:1px solid rgba(255,255,255,0.08); }
+.contact-rij:last-child { border-bottom:none; padding-bottom:0; }
+.contact-icoon { font-size:1.4rem; }
+.c-label { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.15em; color:rgba(255,255,255,0.4); font-weight:700; }
+.c-waarde a, .c-waarde span { color:white; font-weight:700; font-size:0.93rem; text-decoration:none; }
+.c-waarde a:hover { color:var(--goud); }
+ 
+footer { background:#0d2e10; color:rgba(255,255,255,0.4); padding:1.5rem 8vw; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; font-size:0.77rem; }
+.footer-merk { font-family:'Lora',serif; font-size:1.1rem; color:rgba(255,255,255,0.8); }
+.footer-merk span { color:var(--goud); }
+ 
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+@media(max-width:720px) {
+  .nav-links { display:none; }
+  .zon-grid, .contact-inner { grid-template-columns:1fr; }
+  .stap-tab { font-size:0.72rem; padding:0.75rem 0.4rem; }
+}
+</style>
+</head>
+<body>
+ 
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="38" cy="30" r="18" fill="#f9a825"/>
+      <path d="M38 22 L40 28 L38 34 L36 28 Z" fill="#1b5e20"/>
+      <path d="M30 30 L36 28 L42 30 L36 32 Z" fill="#1b5e20"/>
+      <rect x="58" y="42" width="10" height="30" rx="2" fill="#2e7d32"/>
+      <rect x="61" y="38" width="4" height="8" rx="1" fill="#1b5e20"/>
+      <line x1="63" y1="40" x2="63" y2="22" stroke="#2e7d32" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="63" y1="40" x2="78" y2="40" stroke="#2e7d32" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="63" y1="40" x2="63" y2="55" stroke="#2e7d32" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="63" y1="40" x2="48" y2="40" stroke="#2e7d32" stroke-width="3.5" stroke-linecap="round"/>
+      <ellipse cx="35" cy="72" rx="32" ry="14" fill="#43a047"/>
+      <ellipse cx="68" cy="76" rx="28" ry="12" fill="#2e7d32"/>
+    </svg>
+    <span class="nav-naam">HELDER <span>ADVIES</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="naarStap(1)">Uw woning</a></li>
+    <li><a onclick="naarStap(2)">Checklist</a></li>
+    <li><a onclick="naarStap(3)">Resultaat</a></li>
+    <li><a onclick="naarStap(4)">Zonnepanelen</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+ 
+<section class="hero">
+  <div class="hero-logo-groot">
+    <svg width="68" height="68" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="38" cy="30" r="18" fill="#f9a825"/>
+      <path d="M38 22 L40 28 L38 34 L36 28 Z" fill="#1b5e20"/>
+      <path d="M30 30 L36 28 L42 30 L36 32 Z" fill="#1b5e20"/>
+      <rect x="58" y="42" width="10" height="30" rx="2" fill="rgba(255,255,255,0.85)"/>
+      <rect x="61" y="38" width="4" height="8" rx="1" fill="rgba(255,255,255,0.6)"/>
+      <line x1="63" y1="40" x2="63" y2="22" stroke="rgba(255,255,255,0.85)" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="63" y1="40" x2="78" y2="40" stroke="rgba(255,255,255,0.85)" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="63" y1="40" x2="63" y2="55" stroke="rgba(255,255,255,0.85)" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="63" y1="40" x2="48" y2="40" stroke="rgba(255,255,255,0.85)" stroke-width="3.5" stroke-linecap="round"/>
+      <ellipse cx="35" cy="72" rx="32" ry="14" fill="rgba(255,255,255,0.22)"/>
+      <ellipse cx="68" cy="76" rx="28" ry="12" fill="rgba(255,255,255,0.14)"/>
+    </svg>
+    <div>
+      <div style="font-size:1.9rem;font-weight:900;color:white;letter-spacing:0.04em;line-height:1.1;">HELDER ADVIES</div>
+      <div style="color:rgba(255,255,255,0.55);font-size:0.83rem;margin-top:0.2rem;">Onafhankelijk energieadvies</div>
+    </div>
+  </div>
+  <div class="hero-tag">Energiebesparing op maat</div>
+  <h1>Ontdek hoeveel<br>u kunt <em>besparen</em><br>op energie</h1>
+  <p class="hero-sub">Beantwoord een paar vragen over uw woning en apparaten. Wij laten u zien waar uw bespaarpotentieel zit — inclusief een uitgebreide zonnepanelen rekenmachine.</p>
+  <button class="knop" onclick="naarStap(1)" style="animation:fadeUp 0.7s ease 0.8s both;">Begin de energiescan →</button>
+</section>
+ 
+<div class="stappen-nav" id="stappen-nav">
+  <div class="stap-tab actief" onclick="naarStap(1)"><span class="stap-nr">1</span>Uw woning</div>
+  <div class="stap-tab" onclick="naarStap(2)"><span class="stap-nr">2</span>Checklist</div>
+  <div class="stap-tab" onclick="naarStap(3)"><span class="stap-nr">3</span>Resultaat</div>
+  <div class="stap-tab" onclick="naarStap(4)"><span class="stap-nr">☀</span>Zonnepanelen</div>
+</div>
+ 
+<!-- STAP 1 -->
+<section class="sectie" id="stap-woning">
+  <div class="sectie-tag">Stap 1 van 3</div>
+  <h2 class="sectie-titel">Vertel ons over<br><em>uw woning</em></h2>
+  <p class="sectie-sub">Zo schatten we uw bespaarpotentieel zo nauwkeurig mogelijk in.</p>
+  <p class="veld-label" style="margin-top:0">Wat voor type woning heeft u?</p>
+  <div class="woning-grid">
+    <div class="woning-kaart" data-factor="0.8" onclick="kiesWoning(this)"><span class="woning-icon">🏢</span><div class="woning-naam">Appartement</div><div class="woning-sub">Flat of woning in een blok</div></div>
+    <div class="woning-kaart" data-factor="1.0" onclick="kiesWoning(this)"><span class="woning-icon">🏠</span><div class="woning-naam">Tussenwoning</div><div class="woning-sub">Rijtjeshuis, ingesloten</div></div>
+    <div class="woning-kaart" data-factor="1.15" onclick="kiesWoning(this)"><span class="woning-icon">🏡</span><div class="woning-naam">Hoekwoning</div><div class="woning-sub">Aan het einde van een rij</div></div>
+    <div class="woning-kaart" data-factor="1.25" onclick="kiesWoning(this)"><span class="woning-icon">🏘</span><div class="woning-naam">2-onder-1-kap</div><div class="woning-sub">Halfvrijstaand</div></div>
+    <div class="woning-kaart" data-factor="1.5" onclick="kiesWoning(this)"><span class="woning-icon">🏰</span><div class="woning-naam">Vrijstaand</div><div class="woning-sub">Losstaande woning</div></div>
+  </div>
+  <p class="veld-label">Wanneer is uw woning gebouwd?</p>
+  <div class="bouwjaar-rij">
+    <button class="bj-knop" data-iso="0.5" onclick="kiesBouwjaar(this)">Na 2010</button>
+    <button class="bj-knop" data-iso="0.75" onclick="kiesBouwjaar(this)">2000–2010</button>
+    <button class="bj-knop" data-iso="0.9" onclick="kiesBouwjaar(this)">1990–2000</button>
+    <button class="bj-knop" data-iso="1.1" onclick="kiesBouwjaar(this)">1970–1990</button>
+    <button class="bj-knop" data-iso="1.35" onclick="kiesBouwjaar(this)">Voor 1970</button>
+    <button class="bj-knop" data-iso="1.0" onclick="kiesBouwjaar(this)">Weet ik niet</button>
+  </div>
+  <p class="veld-label">Hoeveel personen wonen er in uw woning?</p>
+  <div class="bewoners-rij">
+    <label>Aantal bewoners:</label>
+    <button class="teller-knop" onclick="bewoners(-1)">−</button>
+    <span id="bewoners-display">2</span>
+    <button class="teller-knop" onclick="bewoners(1)">+</button>
+  </div>
+  <div class="doorgaan-rij"><button class="knop" onclick="naarStap(2)">Naar de checklist →</button></div>
+</section>
+ 
+<!-- STAP 2 -->
+<section class="sectie" id="stap-checklist">
+  <div class="sectie-tag">Stap 2 van 3</div>
+  <h2 class="sectie-titel">De energie<em>checklist</em></h2>
+  <p class="sectie-sub"><strong style="color:var(--groen-mid)">Groen = ja</strong>, ik heb dit. <strong style="color:#f57f17">Oranje = nee</strong>, heb ik niet. Klik nogmaals om de keuze ongedaan te maken.</p>
+  <div class="check-legenda">
+    <div class="legenda-item"><div class="legenda-kleur" style="background:#43a047"></div>Ja, aanwezig</div>
+    <div class="legenda-item"><div class="legenda-kleur" style="background:#ffa000"></div>Nee / niet van toepassing</div>
+    <div class="legenda-item"><div class="legenda-kleur" style="background:#ddd"></div>Nog niet beantwoord</div>
+  </div>
+  <div class="voortgang-wrap">
+    <div class="voortgang-label" id="voortgang-tekst">0 van 45 vragen beantwoord</div>
+    <div class="voortgang-balk"><div class="voortgang-vul" id="voortgang-vul"></div></div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">🌡️ Verwarming</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="cv-oud" data-b="90" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">CV-ketel ouder dan 15 jaar</div><div class="check-hint">Oudere ketels zijn een stuk minder efficiënt dan moderne HR-ketels</div></div></div>
+      <div class="check-item" data-id="cv-nieuw" data-b="0" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">HR-ketel aanwezig (modern)</div><div class="check-hint">Goed — een HR-ketel is al een stuk efficiënter dan een oude ketel</div></div></div>
+      <div class="check-item" data-id="warmtepomp" data-b="0" data-b-nee="180" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Warmtepomp geïnstalleerd</div><div class="check-hint">Warmtepompen zijn 3–4x efficiënter dan gasverwarming</div></div></div>
+      <div class="check-item" data-id="vloerverw-elek" data-b="90" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Elektrische vloerverwarming of elektrische kachel</div><div class="check-hint">Elektrisch direct verwarmen is duur — hier valt veel te winnen</div></div></div>
+      <div class="check-item" data-id="slimme-therm" data-b="0" data-b-nee="60" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Slimme thermostaat aanwezig</div><div class="check-hint">Stuurt verwarming slim aan op uw schema — bespaart structureel</div></div></div>
+      <div class="check-item" data-id="airco" data-b="50" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Airconditioning aanwezig</div><div class="check-hint">2°C hoger instellen en gordijnen sluiten overdag geeft direct resultaat</div></div></div>
+      <div class="check-item" data-id="terrasverw" data-b="80" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Terrasverwarmer(s) buiten</div><div class="check-hint">Enorm duur en vervuilend — gebruik een buitendeken</div></div></div>
+      <div class="check-item" data-id="infrarood" data-b="100" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Infraroodpanelen als verwarming</div><div class="check-hint">Als primaire verwarming hoog verbruik — beter alternatief mogelijk</div></div></div>
+      <div class="check-item" data-id="hottub" data-b="200" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Hottub of jacuzzi aanwezig</div><div class="check-hint">Verbruikt 1.500–3.000 kWh/jaar — goed isoleren en sparend gebruiken</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">🍳 Koken</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="gas-koken" data-b="0" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Gaskookplaat in gebruik</div><div class="check-hint">Gas is relatief efficiënt koken — overstap naar inductie is mogelijk maar niet noodzakelijk</div></div></div>
+      <div class="check-item" data-id="keramisch" data-b="40" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Keramische of gewone elektrische kookplaat</div><div class="check-hint">Inductie is 30–40% zuiniger — overweeg een upgrade</div></div></div>
+      <div class="check-item" data-id="inductie" data-b="0" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Inductiekookplaat aanwezig</div><div class="check-hint">Uitstekend — inductie is de zuinigste manier van elektrisch koken</div></div></div>
+      <div class="check-item" data-id="oven" data-b="30" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Oven regelmatig in gebruik</div><div class="check-hint">Gebruik voor kleine porties liever de airfryer — 50–70% minder verbruik</div></div></div>
+      <div class="check-item" data-id="airfryer" data-b="0" data-b-nee="20" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Airfryer aanwezig en in gebruik</div><div class="check-hint">Goed — een airfryer is veel zuiniger dan een gewone oven</div></div></div>
+      <div class="check-item" data-id="frituurpan" data-b="25" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Frituurpan regelmatig gebruikt</div><div class="check-hint">Vervang door een airfryer — zuiniger én gezonder</div></div></div>
+      <div class="check-item" data-id="tostijzer" data-b="5" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Tosti-ijzer of contactgrill dagelijks gebruikt</div><div class="check-hint">Trek de stekker eruit na gebruik — blijft anders doorlopen</div></div></div>
+      <div class="check-item" data-id="waterkoker" data-b="10" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Waterkoker dagelijks in gebruik</div><div class="check-hint">Kook alleen de hoeveelheid die u nodig heeft</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">🚿 Warm water &amp; douche</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="boiler-elek" data-b="50" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Elektrische boiler of Quooker</div><div class="check-hint">Altijd warm water klaarhouden kost continu energie — zet op timer</div></div></div>
+      <div class="check-item" data-id="regendouche" data-b="100" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Regendouche dagelijks in gebruik</div><div class="check-hint">Verbruikt 15–25 liter/min — dubbel zoveel als een gewone douche</div></div></div>
+      <div class="check-item" data-id="normaal-douche" data-b="40" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Gewone douche zonder waterbesparende kop</div><div class="check-hint">Een besparende kop kost €20–40 en verdient zich in weken terug</div></div></div>
+      <div class="check-item" data-id="bespaardouche" data-b="0" data-b-nee="55" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Energiebesparende douchekop aanwezig</div><div class="check-hint">Goed — bespaart 30–50% op warm waterverbruik</div></div></div>
+      <div class="check-item" data-id="bad-gebruik" data-b="60" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Bad regelmatig gevuld</div><div class="check-hint">Een vol bad gebruikt 150–200 liter warm water — douchen is veel zuiniger</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">🏠 Grote huishoudapparaten</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="wasdroger" data-b="100" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Wasdroger regelmatig in gebruik</div><div class="check-hint">Eén van de grootste stroomverbruikers — gebruik waslijn of warmtepompdroger</div></div></div>
+      <div class="check-item" data-id="wasmachine" data-b="35" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Wasmachine op hoge temperatuur (60°C+)</div><div class="check-hint">Op 30°C of 40°C wassen spaart tot 60% op wasenergie</div></div></div>
+      <div class="check-item" data-id="oud-koelkast" data-b="80" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Koelkast of vriezer ouder dan 10 jaar</div><div class="check-hint">Verouderde apparaten verbruiken 2–3x meer dan A+++ modellen</div></div></div>
+      <div class="check-item" data-id="vriezer-ijs" data-b="50" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Vriezer met veel ijsvorming</div><div class="check-hint">IJsaanslag laat de motor harder werken — regelmatig ontdooien helpt direct</div></div></div>
+      <div class="check-item" data-id="vaatwasser" data-b="25" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Vaatwasser aanwezig</div><div class="check-hint">Altijd vol draaien en eco-stand gebruiken voor optimaal verbruik</div></div></div>
+      <div class="check-item" data-id="laadpaal" data-b="60" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Laadpaal voor een elektrische auto</div><div class="check-hint">Slim laden in de daluren (22:00–07:00) scheelt flink op de rekening</div></div></div>
+      <div class="check-item" data-id="loopband" data-b="30" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Loopband of andere grote fitnessapparaten</div><div class="check-hint">Stroom die u misschien niet meerekent — altijd echt uitzetten</div></div></div>
+      <div class="check-item" data-id="aquarium" data-b="55" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Aquarium aanwezig</div><div class="check-hint">Verlichting en verwarming draaien 24/7 — LED-verlichting en efficiënte filter helpen</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">💻 Elektronica &amp; standby</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="gaming-pc" data-b="70" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Computer of gaming-pc dagelijks aan</div><div class="check-hint">Echt uitzetten i.p.v. slaapstand bespaart structureel — gaming-pc verbruikt 400W+</div></div></div>
+      <div class="check-item" data-id="opladers" data-b="25" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Opladers altijd in het stopcontact</div><div class="check-hint">Zelfs zonder apparaat verbruiken opladers stroom — schakelbare stekkerdoos helpt</div></div></div>
+      <div class="check-item" data-id="printer" data-b="20" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Printer of koffiemachine met display permanent aan</div><div class="check-hint">Standby met display kost continu stroom — echt uitzetten helpt</div></div></div>
+      <div class="check-item" data-id="tv-standby" data-b="15" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Televisie op standby (niet echt uit)</div><div class="check-hint">Verbruikt 5–15W continu — gebruik de stekker of echte uit-knop</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">🏗️ Isolatie &amp; glas</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="enkel-glas" data-b="150" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Enkel glas aanwezig in de woning</div><div class="check-hint">Grootste warmteverlies — vervangen door HR++ is de beste investering</div></div></div>
+      <div class="check-item" data-id="dubbel-glas" data-b="40" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Gewoon dubbel glas (geen HR++)</div><div class="check-hint">Upgrade naar HR++ of triple glas vermindert warmteverlies verder</div></div></div>
+      <div class="check-item" data-id="hr-glas" data-b="0" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">HR++-glas of triple glas aanwezig</div><div class="check-hint">Goed — dit is de beste glasoplossing voor warmte-isolatie</div></div></div>
+      <div class="check-item" data-id="spouwmuur" data-b="0" data-b-nee="150" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Spouwmuurisolatie aanwezig</div><div class="check-hint">Nog niet gedaan? Meest kosteneffectieve maatregel voor woningen van voor 2000</div></div></div>
+      <div class="check-item" data-id="dakisolatie" data-b="0" data-b-nee="100" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Dakisolatie aanwezig</div><div class="check-hint">Via het dak verliest u 25–30% warmte — goede isolatie loont enorm</div></div></div>
+      <div class="check-item" data-id="vloerisolatie" data-b="0" data-b-nee="70" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Vloer- of kruipruimte-isolatie aanwezig</div><div class="check-hint">Kruipruimte isoleren is goedkoop en bespaart tot €70 per jaar</div></div></div>
+      <div class="check-item" data-id="tochtstrips" data-b="0" data-b-nee="35" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Tochtstrips bij deuren en ramen aangebracht</div><div class="check-hint">Kost een paar tientjes en verdient zich in weken terug</div></div></div>
+      <div class="check-item" data-id="radiatorfolie" data-b="0" data-b-nee="45" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Radiatorfolie achter de verwarmingen</div><div class="check-hint">Kost €10 en reflecteert warmte de kamer in — eenvoudig zelf aan te brengen</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">💡 Verlichting &amp; opwekking</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="led" data-b="0" data-b-nee="70" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">LED-verlichting overal in huis</div><div class="check-hint">Uitstekend — LED gebruikt 80–90% minder dan gloeilampen</div></div></div>
+      <div class="check-item" data-id="geen-led" data-b="70" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Nog halogeenlampen of gloeilampen in gebruik</div><div class="check-hint">Vervang nu door LED — terugverdientijd minder dan een jaar</div></div></div>
+      <div class="check-item" data-id="zonnepanelen" data-b="0" data-b-nee="600" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Zonnepanelen geïnstalleerd</div><div class="check-hint">Nog geen panelen? Bekijk de zonnepanelen rekenmachine op deze pagina</div></div></div>
+      <div class="check-item" data-id="thuisbatterij" data-b="0" data-b-nee="120" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Thuisbatterij aanwezig</div><div class="check-hint">Sla eigen opgewekte stroom op — steeds interessanter nu saldering afneemt</div></div></div>
+      <div class="check-item" data-id="zonneboiler" data-b="0" data-b-nee="80" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Zonneboiler voor warm water</div><div class="check-hint">Bespaart 50–70% op warmwaterkosten — subsidie via ISDE beschikbaar</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="categorie-blok">
+    <div class="categorie-titel">🌿 Overig</div>
+    <div class="check-grid">
+      <div class="check-item" data-id="dyn-contract" data-b="0" data-b-nee="50" onclick="toggleCheck(this)"><div class="check-vak"></div><div><div class="check-tekst">Dynamisch of variabel energiecontract</div><div class="check-hint">Met slim laden en apparaten in daluren kunt u aanzienlijk besparen</div></div></div>
+    </div>
+  </div>
+ 
+  <div class="doorgaan-rij"><button class="knop" onclick="naarStap(3)">Bekijk mijn resultaat →</button></div>
+</section>
+ 
+<!-- STAP 3 -->
+<section class="sectie" id="stap-resultaat">
+  <div class="sectie-tag">Stap 3 van 3</div>
+  <h2 class="sectie-titel">Uw persoonlijk<br><em>bespaarpotentieel</em></h2>
+  <div class="resultaat-top">
+    <div style="font-size:0.85rem;opacity:0.6;margin-bottom:0.5rem;">Geschatte jaarlijkse besparing voor uw situatie</div>
+    <div class="bespaar-bedrag" id="totaal-bedrag">€ 0</div>
+    <div class="bespaar-label">per jaar mogelijk te besparen</div>
+    <div class="bespaar-sub" id="result-sub">Vul de checklist in voor een persoonlijk overzicht</div>
+  </div>
+  <h3 style="font-family:'Lora',serif;font-size:1.35rem;color:var(--groen-donker);margin-bottom:1.25rem;">Waar zit uw bespaarpotentieel?</h3>
+  <div class="tips-resultaat" id="tips-container">
+    <div style="color:var(--tekst-licht);font-size:0.9rem;padding:1rem;">Vul eerst de checklist in om gepersonaliseerde tips te zien.</div>
+  </div>
+  <div class="positief-blok" id="positief-blok" style="display:none;">
+    <h3>✅ Dit doet u al goed</h3>
+    <ul class="positief-lijst" id="positief-lijst"></ul>
+  </div>
+  <div style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:1rem;">
+    <button class="knop" onclick="naarStap(2)">← Checklist aanpassen</button>
+    <button class="knop knop-groen" onclick="naarStap(4)">☀ Zonnepanelen rekenmachine</button>
+    <button class="knop knop-licht" onclick="herstart()">Opnieuw beginnen</button>
+  </div>
+</section>
+ 
+<!-- STAP 4: ZONNEPANELEN -->
+<section class="sectie" id="stap-zon">
+  <div class="sectie-tag">Extra tool</div>
+  <h2 class="sectie-titel">Zonnepanelen<br><em>rekenmachine</em></h2>
+  <p class="sectie-sub">Bereken of zonnepanelen nog interessant zijn — ook nu de salderingsregeling wordt afgebouwd.</p>
+ 
+  <div class="zon-banner">
+    <h3>⚠️ Let op: de salderingsregeling verandert</h3>
+    <p>Tot 2025 ontving u voor teruggeleverde stroom hetzelfde tarief als de stroomprijs (saldering). Dit wordt afgebouwd: in 2025 ontvangt u nog ca. <strong>€0,07–0,09 per teruggeleverde kWh</strong>. Uw <strong>eigen verbruik overdag</strong> is daardoor veel belangrijker geworden. De rekenmachine houdt hier volledig rekening mee.</p>
+  </div>
+ 
+  <div class="zon-grid">
+    <div class="zon-form">
+      <h3>Vul uw gegevens in</h3>
+      <div class="zon-veld">
+        <label>Aantal zonnepanelen</label>
+        <input type="number" id="z-panelen" value="10" min="1" max="50" oninput="berekenZon()">
+        <div class="zon-hint">Gemiddeld dak: 10–16 panelen. 1 paneel ≈ 2 m² en ca. 400 Wp</div>
+      </div>
+      <div class="zon-veld">
+        <label>Dakrichting</label>
+        <select id="z-dak" onchange="berekenZon()">
+          <option value="1.0">Zuid (optimaal)</option>
+          <option value="0.87">Oost of West</option>
+          <option value="0.75">Oost én West (verdeeld)</option>
+          <option value="0.65">Noord (minder geschikt)</option>
+        </select>
+      </div>
+      <div class="zon-veld">
+        <label>Huidige stroomprijs (€ per kWh)</label>
+        <input type="number" id="z-prijs" value="0.36" step="0.01" min="0.1" max="1.0" oninput="berekenZon()">
+        <div class="zon-hint">Kijk op uw energierekening — gemiddeld 2025: €0,34–0,38</div>
+      </div>
+      <div class="zon-veld">
+        <label>Teruglevertarief (€ per kWh)</label>
+        <input type="number" id="z-terug" value="0.08" step="0.01" min="0.01" max="0.40" oninput="berekenZon()">
+        <div class="zon-hint">Na afbouw saldering: ca. €0,07–0,09. Vraag uw leverancier naar het actuele tarief</div>
+      </div>
+      <div class="zon-veld">
+        <label>Hoeveel stroom verbruikt u overdag thuis?</label>
+        <select id="z-eigen" onchange="berekenZon()">
+          <option value="25">Weinig thuis overdag (~25%)</option>
+          <option value="40" selected>Soms thuis overdag (~40%)</option>
+          <option value="55">Regelmatig thuis (~55%)</option>
+          <option value="70">Veel thuis / thuiswerker (~70%)</option>
+          <option value="85">Bijna altijd thuis (~85%)</option>
+        </select>
+        <div class="zon-hint">Hoe meer u overdag thuis verbruikt, hoe groter uw besparing</div>
+      </div>
+      <div class="zon-veld">
+        <label>Thuisbatterij aanwezig?</label>
+        <select id="z-batt" onchange="berekenZon()">
+          <option value="0">Nee</option>
+          <option value="15">Ja — kleine batterij (+15% eigen verbruik)</option>
+          <option value="30">Ja — grote batterij (+30% eigen verbruik)</option>
+        </select>
+      </div>
+      <div class="zon-veld">
+        <label>Geschatte investering (€)</label>
+        <input type="number" id="z-invest" value="6000" step="500" min="1000" oninput="berekenZon()">
+        <div class="zon-hint">Gemiddeld €500–700 per paneel incl. installatie. Na subsidie vaak minder</div>
+      </div>
+    </div>
+ 
+    <div class="zon-resultaat">
+      <h3>Uw berekening</h3>
+      <div class="zon-getal-groot" id="z-opwek">0 kWh</div>
+      <div class="zon-getal-sub">geschatte jaarlijkse opwekking</div>
+      <div class="zon-rij"><span class="zon-rij-naam">📥 Zelf verbruikt (volledige stroomprijs bespaard)</span><span class="zon-rij-waarde" id="z-res-eigen">€ 0</span></div>
+      <div class="zon-rij"><span class="zon-rij-naam">🔁 Teruggeleverd aan het net</span><span class="zon-rij-waarde" id="z-res-terug">€ 0</span></div>
+      <div class="zon-rij" style="border-top:2px solid var(--groen-licht);margin-top:0.5rem;padding-top:0.75rem;">
+        <span class="zon-rij-naam" style="font-weight:800;color:var(--groen-donker)">💰 Totale jaarlijkse besparing</span>
+        <span class="zon-rij-waarde" style="font-size:1.05rem;" id="z-res-totaal">€ 0</span>
+      </div>
+      <div class="zon-terugverdien">
+        <div class="tv-getal" id="z-tvt">— jaar</div>
+        <div class="tv-label">geschatte terugverdientijd</div>
+      </div>
+      <div class="zon-advies" id="z-advies"></div>
+      <p class="zon-noot">* Berekening op basis van gemiddeld Nederlands zonprofiel (875 kWh/kWp/jaar). Werkelijke opbrengst hangt af van dakhoek, schaduw en paneeltype. Vraag altijd meerdere offertes op en raadpleeg een specialist.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- CONTACT -->
+<section id="contact" style="padding:5rem 8vw;background:var(--groen-donker);">
+  <div class="contact-inner">
+    <div>
+      <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--groen-licht);font-weight:700;margin-bottom:0.75rem;">Neem contact op</div>
+      <h2 style="font-family:'Lora',serif;font-size:2rem;color:white;margin-bottom:0.75rem;line-height:1.2;">Wilt u persoonlijk <em style="color:var(--goud);font-style:italic;">advies?</em></h2>
+      <p style="color:rgba(255,255,255,0.65);line-height:1.8;font-size:0.95rem;max-width:420px;">Heeft u vragen naar aanleiding van uw resultaat? Of wilt u een uitgebreider energieadvies voor uw woning? Neem gerust contact op — we helpen u graag verder.</p>
+    </div>
+    <div class="contact-box">
+      <div class="contact-rij">
+        <span class="contact-icoon">📧</span>
+        <div>
+          <div class="c-label">E-mail</div>
+          <div class="c-waarde"><a href="mailto:142399@reggesteyn.nu">142399@reggesteyn.nu</a></div>
+        </div>
+      </div>
+      <div class="contact-rij">
+        <span class="contact-icoon">🏢</span>
+        <div>
+          <div class="c-label">Bedrijf</div>
+          <div class="c-waarde"><span>Helder Advies</span></div>
+        </div>
+      </div>
+      <div class="contact-rij">
+        <span class="contact-icoon">🌿</span>
+        <div>
+          <div class="c-label">Specialisatie</div>
+          <div class="c-waarde"><span>Onafhankelijk energieadvies</span></div>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <a href="mailto:142399@reggesteyn.nu" class="knop" style="display:block;text-align:center;">Stuur een e-mail →</a>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <div class="footer-merk">HELDER <span>ADVIES</span></div>
+  <div>Onafhankelijk energieadvies voor woningen</div>
+  <div>Bedragen zijn schattingen — vraag een professional voor maatwerk</div>
+</footer>
+ 
+<script>
+let woningFactor=1.0, isolatieFactor=1.0, aantalBewoners=2;
+let antwoorden={};
+ 
+function naarStap(n){
+  ['stap-woning','stap-checklist','stap-resultaat','stap-zon'].forEach((id,i)=>{
+    document.getElementById(id).style.display=(i===n-1)?'block':'none';
+  });
+  document.querySelectorAll('.stap-tab').forEach((t,i)=>t.classList.toggle('actief',i===n-1));
+  if(n===3) berekenResultaat();
+  if(n===4) berekenZon();
+  const ids=['stap-woning','stap-checklist','stap-resultaat','stap-zon'];
+  setTimeout(()=>document.getElementById(ids[n-1]).scrollIntoView({behavior:'smooth',block:'start'}),50);
+}
+ 
+function kiesWoning(el){
+  document.querySelectorAll('.woning-kaart').forEach(k=>k.classList.remove('gekozen'));
+  el.classList.add('gekozen');
+  woningFactor=parseFloat(el.dataset.factor);
+}
+function kiesBouwjaar(el){
+  document.querySelectorAll('.bj-knop').forEach(b=>b.classList.remove('gekozen'));
+  el.classList.add('gekozen');
+  isolatieFactor=parseFloat(el.dataset.iso);
+}
+function bewoners(d){
+  aantalBewoners=Math.max(1,Math.min(10,aantalBewoners+d));
+  document.getElementById('bewoners-display').textContent=aantalBewoners;
+}
+ 
+function toggleCheck(el){
+  const id=el.dataset.id;
+  if(!antwoorden[id]){
+    el.classList.add('ja');el.classList.remove('nee');
+    el.querySelector('.check-vak').textContent='✓';
+    antwoorden[id]='ja';
+  } else if(antwoorden[id]==='ja'){
+    el.classList.remove('ja');el.classList.add('nee');
+    el.querySelector('.check-vak').textContent='✕';
+    antwoorden[id]='nee';
+  } else {
+    el.classList.remove('nee','ja');
+    el.querySelector('.check-vak').textContent='';
+    delete antwoorden[id];
+  }
+  updateVoortgang();
+}
+function updateVoortgang(){
+  const totaal=document.querySelectorAll('.check-item').length;
+  const beantwoord=Object.keys(antwoorden).length;
+  document.getElementById('voortgang-tekst').textContent=`${beantwoord} van ${totaal} vragen beantwoord`;
+  document.getElementById('voortgang-vul').style.width=(beantwoord/totaal*100)+'%';
+}
+ 
+const tipData=[
+  {id:'cv-oud',naam:'Oude CV-ketel vervangen',b:90,uitleg:'Een HR-ketel of warmtepomp is veel efficiënter. Subsidie via ISDE beschikbaar.'},
+  {id:'wasdroger',naam:'Wasdroger',b:100,uitleg:'Gebruik de waslijn of een warmtepompdroger (A+++). Bespaart tot €100 per jaar.'},
+  {id:'oud-koelkast',naam:'Verouderde koelkast/vriezer',b:80,uitleg:'Apparaten ouder dan 10 jaar verbruiken 2–3x meer. Vervang door een A+++ model.'},
+  {id:'vriezer-ijs',naam:'Vriezer ontdooien',b:50,uitleg:'IJsaanslag laat de motor harder werken. Regelmatig ontdooien bespaart direct.'},
+  {id:'vloerverw-elek',naam:'Elektrische verwarming',b:90,uitleg:'Elektrisch direct verwarmen is duur. Overweeg een warmtepomp of slimme thermostaat.'},
+  {id:'airco',naam:'Airconditioning',b:50,uitleg:'2°C hoger instellen en gordijnen sluiten overdag geeft direct resultaat.'},
+  {id:'terrasverw',naam:'Terrasverwarming',b:80,uitleg:'Duur en vervuilend — gebruik een buitendeken of vervangende verwarming.'},
+  {id:'infrarood',naam:'Infraroodpanelen',b:100,uitleg:'Als primaire verwarming hoog verbruik — warmtepomp of HR-ketel is beter.'},
+  {id:'hottub',naam:'Hottub/jacuzzi',b:200,uitleg:'Verbruikt 1.500–3.000 kWh/jaar — goed isoleren en sparend gebruiken.'},
+  {id:'boiler-elek',naam:'Elektrische boiler/Quooker',b:50,uitleg:'Zet op timer zodat hij niet 24/7 warm hoeft te blijven.'},
+  {id:'regendouche',naam:'Regendouche',b:100,uitleg:'Verbruikt dubbel zoveel warm water. Kortere douches of andere kop helpt direct.'},
+  {id:'normaal-douche',naam:'Waterbesparende douchekop',b:40,uitleg:'Kost €20–40 en verdient zich in weken terug. Eenvoudig zelf te monteren.'},
+  {id:'bad-gebruik',naam:'Bad minder vullen',b:60,uitleg:'Een bad gebruikt 150–200 liter warm water — douchen is veel zuiniger.'},
+  {id:'wasmachine',naam:'Wassen op lagere temperatuur',b:35,uitleg:'30°C of 40°C i.p.v. 60°C spaart 50–60% op wasenergie. Werkt net zo goed.'},
+  {id:'keramisch',naam:'Keramische kookplaat',b:40,uitleg:'Inductie is 30–40% zuiniger. De investering verdient zich snel terug.'},
+  {id:'oven',naam:'Oven vs. airfryer',b:30,uitleg:'Gebruik voor kleine porties de airfryer — 50–70% minder verbruik.'},
+  {id:'frituurpan',naam:'Frituurpan',b:25,uitleg:'Vervang door een airfryer — zuiniger én gezonder.'},
+  {id:'tostijzer',naam:'Tosti-ijzer',b:5,uitleg:'Trek de stekker eruit na gebruik.'},
+  {id:'waterkoker',naam:'Waterkoker',b:10,uitleg:'Kook alleen de hoeveelheid die u nodig heeft.'},
+  {id:'vaatwasser',naam:'Vaatwasser',b:25,uitleg:'Altijd vol draaien en eco-stand gebruiken voor optimaal resultaat.'},
+  {id:'laadpaal',naam:'Slim laden elektrische auto',b:60,uitleg:'Laad in de daluren (22:00–07:00) voor een lagere stroomprijs.'},
+  {id:'loopband',naam:'Fitnessapparaten',b:30,uitleg:'Altijd echt uitzetten na gebruik — vergeet dit verbruik niet.'},
+  {id:'aquarium',naam:'Aquarium',b:55,uitleg:'LED-verlichting en efficiënte filter besparen tot €55 per jaar.'},
+  {id:'gaming-pc',naam:'Computer/gaming-pc',b:70,uitleg:'Echt uitzetten i.p.v. slaapstand bespaart structureel.'},
+  {id:'opladers',naam:'Opladers uit stopcontact',b:25,uitleg:'Schakelbare stekkerdoos aanschaffen — opladers verbruiken ook zonder apparaat.'},
+  {id:'printer',naam:'Printer/koffiemachine',b:20,uitleg:'Apparaten met display verbruiken constant stroom — echt uitzetten.'},
+  {id:'tv-standby',naam:'TV echt uitzetten',b:15,uitleg:'Standby verbruikt 5–15W continu — gebruik de stekker of echte uit-knop.'},
+  {id:'enkel-glas',naam:'Enkel glas vervangen',b:150,uitleg:'HR++-glas is de beste stap. Subsidie via ISDE beschikbaar.'},
+  {id:'dubbel-glas',naam:'HR++-glas upgrade',b:40,uitleg:'Van gewoon dubbel naar HR++ vermindert warmteverlies verder.'},
+  {id:'geen-led',naam:'Overstap naar LED',b:70,uitleg:'Vervang nu — LED is 80–90% zuiniger. Terugverdientijd onder een jaar.'},
+];
+ 
+const negatief={
+  'spouwmuur':{b:150,naam:'Spouwmuurisolatie aanbrengen'},
+  'dakisolatie':{b:100,naam:'Dakisolatie aanbrengen'},
+  'vloerisolatie':{b:70,naam:'Vloer-/kruipruimte-isolatie'},
+  'tochtstrips':{b:35,naam:'Tochtstrips aanbregen'},
+  'radiatorfolie':{b:45,naam:'Radiatorfolie plaatsen'},
+  'led':{b:70,naam:'Overstappen op LED'},
+  'zonnepanelen':{b:600,naam:'Zonnepanelen plaatsen'},
+  'thuisbatterij':{b:120,naam:'Thuisbatterij overwegen'},
+  'warmtepomp':{b:180,naam:'Warmtepomp installeren'},
+  'slimme-therm':{b:60,naam:'Slimme thermostaat'},
+  'bespaardouche':{b:55,naam:'Besparende douchekop'},
+  'zonneboiler':{b:80,naam:'Zonneboiler'},
+  'dyn-contract':{b:50,naam:'Dynamisch energiecontract'},
+  'airfryer':{b:20,naam:'Airfryer aanschaffen'},
+};
+ 
+const goedItems={
+  'led':'LED-verlichting','warmtepomp':'Warmtepomp','zonnepanelen':'Zonnepanelen',
+  'thuisbatterij':'Thuisbatterij','bespaardouche':'Energiebesparende douchekop',
+  'airfryer':'Airfryer','hr-glas':'HR++-glas','spouwmuur':'Spouwmuurisolatie',
+  'dakisolatie':'Dakisolatie','vloerisolatie':'Vloerisolatie','tochtstrips':'Tochtstrips',
+  'radiatorfolie':'Radiatorfolie','slimme-therm':'Slimme thermostaat',
+  'inductie':'Inductiekookplaat','cv-nieuw':'HR-ketel','zonneboiler':'Zonneboiler',
+  'dyn-contract':'Dynamisch contract',
+};
+ 
+function berekenResultaat(){
+  let totaal=0;
+  const actieTips=[];
+  const goedDoen=[];
+ 
+  tipData.forEach(t=>{
+    if(antwoorden[t.id]==='ja'){
+      const b=Math.round(t.b*woningFactor*(0.8+aantalBewoners*0.1)*isolatieFactor);
+      actieTips.push({naam:t.naam,bedrag:b,uitleg:t.uitleg});
+      totaal+=b;
+    }
+  });
+ 
+  Object.entries(negatief).forEach(([id,info])=>{
+    if(antwoorden[id]==='nee'){
+      const b=Math.round(info.b*woningFactor);
+      actieTips.push({naam:info.naam,bedrag:b,uitleg:'Hier ligt een kans voor uw woning.'});
+      totaal+=b;
+    }
+  });
+ 
+  Object.entries(goedItems).forEach(([id,naam])=>{
+    if(antwoorden[id]==='ja') goedDoen.push(naam);
+  });
+ 
+  totaal=Math.round(totaal);
+  actieTips.sort((a,b)=>b.bedrag-a.bedrag);
+ 
+  document.getElementById('totaal-bedrag').textContent='€ '+totaal.toLocaleString('nl-NL');
+  document.getElementById('result-sub').textContent=`Op basis van ${Object.keys(antwoorden).length} ingevulde vragen, uw woningtype en bouwjaar`;
+ 
+  document.getElementById('tips-container').innerHTML=actieTips.length
+    ?actieTips.map(t=>`<div class="tip-res"><div class="tip-res-top"><div class="tip-res-naam">${t.naam}</div><div class="tip-res-bedrag">~ €${t.bedrag}/jr</div></div><div class="tip-res-uitleg">${t.uitleg}</div></div>`).join('')
+    :'<div style="color:var(--tekst-licht);padding:1rem;">Vul de checklist in om tips te zien.</div>';
+ 
+  document.getElementById('positief-lijst').innerHTML=goedDoen.map(n=>`<li>✓ ${n}</li>`).join('');
+  document.getElementById('positief-blok').style.display=goedDoen.length?'block':'none';
+}
+ 
+function berekenZon(){
+  const panelen=parseFloat(document.getElementById('z-panelen').value)||10;
+  const dakF=parseFloat(document.getElementById('z-dak').value)||1.0;
+  const prijs=parseFloat(document.getElementById('z-prijs').value)||0.36;
+  const terug=parseFloat(document.getElementById('z-terug').value)||0.08;
+  const eigenPct=(parseFloat(document.getElementById('z-eigen').value)||40)/100;
+  const battBonus=parseFloat(document.getElementById('z-batt').value)||0;
+  const invest=parseFloat(document.getElementById('z-invest').value)||6000;
+ 
+  const kwp=panelen*0.40;
+  const kwh=Math.round(kwp*875*dakF);
+  const effEigen=Math.min(0.95,eigenPct+battBonus/100);
+  const eigenKwh=Math.round(kwh*effEigen);
+  const terugKwh=kwh-eigenKwh;
+  const bEigen=Math.round(eigenKwh*prijs);
+  const bTerug=Math.round(terugKwh*terug);
+  const totaal=bEigen+bTerug;
+  const tvt=totaal>0?(invest/totaal).toFixed(1):'—';
+ 
+  document.getElementById('z-opwek').textContent=kwh.toLocaleString('nl-NL')+' kWh';
+  document.getElementById('z-res-eigen').textContent='€ '+bEigen.toLocaleString('nl-NL');
+  document.getElementById('z-res-terug').textContent='€ '+bTerug.toLocaleString('nl-NL');
+  document.getElementById('z-res-totaal').textContent='€ '+totaal.toLocaleString('nl-NL');
+  document.getElementById('z-tvt').textContent=tvt+' jaar';
+ 
+  let advies='';
+  if(terug<0.10) advies+=`<strong>⚠️ Lage terugleverprijs:</strong> U ontvangt slechts €${terug.toFixed(2)}/kWh voor teruggeleverde stroom. Eigen verbruik overdag is daardoor veel waardevoller. `;
+  const tvtN=parseFloat(tvt);
+  if(tvtN<=7) advies+=`✅ <strong>Advies: interessant!</strong> Met een terugverdientijd van ${tvt} jaar zijn zonnepanelen in uw situatie een goede investering. Zonnepanelen gaan 25–30 jaar mee.`;
+  else if(tvtN<=12) advies+=`🔶 <strong>Advies: redelijk interessant.</strong> ${tvt} jaar is een acceptabele terugverdientijd. Een thuisbatterij vergroot uw eigen verbruik en verbetert de berekening.`;
+  else advies+=`🔴 <strong>Advies: minder aantrekkelijk</strong> met deze instellingen. Verhoog uw eigen verbruik overdag (thuisbatterij, laadpaal, apparaten overdag) om de terugverdientijd te verbeteren.`;
+  if(eigenPct<0.4) advies+=' Een thuisbatterij of aanpassing van uw verbruikspatroon kan de besparing aanzienlijk verhogen.';
+ 
+  document.getElementById('z-advies').innerHTML=advies;
+}
+ 
+function herstart(){
+  antwoorden={};
+  document.querySelectorAll('.check-item').forEach(el=>{
+    el.classList.remove('ja','nee');
+    el.querySelector('.check-vak').textContent='';
+  });
+  document.querySelectorAll('.woning-kaart').forEach(k=>k.classList.remove('gekozen'));
+  document.querySelectorAll('.bj-knop').forEach(b=>b.classList.remove('gekozen'));
+  woningFactor=1.0;isolatieFactor=1.0;aantalBewoners=2;
+  document.getElementById('bewoners-display').textContent=2;
+  updateVoortgang();
+  naarStap(1);
+}
+ 
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('vast',window.scrollY>80);
+});
+ 
+['stap-checklist','stap-resultaat','stap-zon'].forEach(id=>{
+  document.getElementById(id).style.display='none';
+});
+berekenZon();
+</script>
+</body>
+</html>
